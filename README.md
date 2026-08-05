@@ -1,8 +1,3 @@
-<style>
-  
-</style>
-
-
 <h1>RPL-Menu</h1>
 <p>This project was started on august 5th, 2026.</p>
 <p>The purpose of this website development was for the sake of</p>
@@ -17,7 +12,7 @@
 <p><b><i>-Barakuda_black</i></b></p>
 <hr>
 <h1>The Members of Barakuda_black</h1>
-<div class="container">
+<div class="container" style="img{height:auto; width:8rem; border-radius:2rem;}">
 <img src="assets\image\IMG-20260216-WA0285.jpg">
 <img src="assets\image\Screenshot 2026-08-05 203119.png">
 <img src="assets\image\Screenshot 2026-08-05 204705.png">
