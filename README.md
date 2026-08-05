@@ -12,13 +12,15 @@
 <p><b><i>-Barakuda_black</i></b></p>
 <hr>
 <h1>The Members of Barakuda_black</h1>
-<div class="container" style="display:inline; justify-content:space-between; align-items:center;">
-<img src="assets\image\IMG-20260216-WA0285.jpg" style="height:auto; width:8rem; border-radius:100%;">
+<div style="display:inline; justify-content:space-between; align-items:center;">
+<div class="box" style="display:flex; flex:wrap;">
+  <img src="assets\image\IMG-20260216-WA0285.jpg" style="height:auto; width:8rem; border-radius:100%;">
   <a href="https://github.com/sagara-ds">Sagara Dwi Septiansyah</a>
-<img src="assets\image\Screenshot 2026-08-05 203119.png" style="height:auto; width:8rem; border-radius:100%;">
+</div>
+  <img src="assets\image\Screenshot 2026-08-05 203119.png" style="height:auto; width:8rem; border-radius:100%;">
   <a href="https://github.com/sagara-ds">Sagara Dwi Septiansyah</a>
-<img src="assets\image\Screenshot 2026-08-05 204705.png" style="height:auto; width:8rem; border-radius:100%;">
+  <img src="assets\image\Screenshot 2026-08-05 204705.png" style="height:auto; width:8rem; border-radius:100%;">
   <a href="https://github.com/sagara-ds">Sagara Dwi Septiansyah</a>
-<img src="assets\image\Screenshot 2026-08-05 205508.png" style="height:auto; width:8rem; border-radius:100%;">
+  <img src="assets\image\Screenshot 2026-08-05 205508.png" style="height:auto; width:8rem; border-radius:100%;">
   <a href="https://github.com/sagara-ds">Sagara Dwi Septiansyah</a>
 </div>
