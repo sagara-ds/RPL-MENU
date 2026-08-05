@@ -1,4 +1,4 @@
-<h1>RPL-Menu</h1>
+<h1 style="color:orange;">RPL-<span style="blue">Menu</span></h1>
 <p>This project was started on august 5th, 2026.</p>
 <p>The purpose of this website development was for the sake of</p>
 <p>my whole class in the preparation for the school bazaar that take</p>
