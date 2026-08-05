@@ -13,14 +13,12 @@
 <hr>
 <h1>The Members of Barakuda_black</h1>
 <div style="display:inline; justify-content:space-between; align-items:center;">
-<div class="box" style="display:flex; flex:wrap; width:8rem; height:auto;">
   <img src="assets\image\IMG-20260216-WA0285.jpg" style="height:auto; width:8rem; border-radius:100%;">
-  <a href="https://github.com/sagara-ds">Sagara Dwi Septiansyah</a>
-</div>
+  <a href="https://github.com/sagara-ds"><p>Sagara Dwi Septiansyah</p></a>
   <img src="assets\image\Screenshot 2026-08-05 203119.png" style="height:auto; width:8rem; border-radius:100%;">
-  <a href="https://github.com/sagara-ds">Sagara Dwi Septiansyah</a>
+  <a href="https://github.com/sagara-ds"><p>Sagara Dwi Septiansyah</p></a>
   <img src="assets\image\Screenshot 2026-08-05 204705.png" style="height:auto; width:8rem; border-radius:100%;">
-  <a href="https://github.com/sagara-ds">Sagara Dwi Septiansyah</a>
+  <a href="https://github.com/sagara-ds"><p>Sagara Dwi Septiansyah</p></a>
   <img src="assets\image\Screenshot 2026-08-05 205508.png" style="height:auto; width:8rem; border-radius:100%;">
-  <a href="https://github.com/sagara-ds">Sagara Dwi Septiansyah</a>
+  <a href="https://github.com/sagara-ds"><p>Sagara Dwi Septiansyah</p></a>
 </div>
