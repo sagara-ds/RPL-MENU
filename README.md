@@ -1,2 +1,2 @@
 <img src="https://media.licdn.com/dms/image/v2/D4E03AQEizKJ7kldg6A/profile-displayphoto-scale_200_200/B4EZq7Mis0KcAY-/0/1764077221105?e=2147483647&v=beta&t=-dMHPI90Ma_g4JhHn6mREQQp_rEogFnF6Q0Nxk47o3w">
-<img src="assets\image\LOGO_RPL.png">
+<img src="assets\image\RPL_LOGO.png">
