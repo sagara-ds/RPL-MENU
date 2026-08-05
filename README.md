@@ -20,5 +20,5 @@
   <img src="assets\image\Screenshot 2026-08-05 204705.png" style="height:auto; width:8rem; border-radius:100%;">
   <a href="https://github.com/sagara-ds"><p>Sagara Dwi Septiansyah</p></a>
   <img src="assets\image\Screenshot 2026-08-05 205508.png" style="height:auto; width:8rem; border-radius:100%;">
-  <a href="https://github.com/sagara-ds"><p>Sagara Dwi Septiansyah</p></a>
+  <a href="https://github.com/mikaelputra001-lang"><p>Mikael Putra Wibowo</p></a>
 </div>
