@@ -12,9 +12,9 @@
 <p><b><i>-Barakuda_black</i></b></p>
 <hr>
 <h1>The Members of Barakuda_black</h1>
-<div class="container">
-<img src="assets\image\IMG-20260216-WA0285.jpg" style="height:auto; width:8rem; border-radius:2rem;">
-<img src="assets\image\Screenshot 2026-08-05 203119.png" style="height:auto; width:8rem; border-radius:2rem;">
-<img src="assets\image\Screenshot 2026-08-05 204705.png" style="height:auto; width:8rem; border-radius:2rem;">
-<img src="assets\image\Screenshot 2026-08-05 205508.png" style="height:auto; width:8rem; border-radius:2rem;">
+<div class="container" style="justify-content:space-between; align-items:center;">
+<img src="assets\image\IMG-20260216-WA0285.jpg" style="height:auto; width:8rem; border-radius:100%;">
+<img src="assets\image\Screenshot 2026-08-05 203119.png" style="height:auto; width:8rem; border-radius:100%;">
+<img src="assets\image\Screenshot 2026-08-05 204705.png" style="height:auto; width:8rem; border-radius:100%;">
+<img src="assets\image\Screenshot 2026-08-05 205508.png" style="height:auto; width:8rem; border-radius:100%;">
 </div>
