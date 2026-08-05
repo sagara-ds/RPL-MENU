@@ -13,7 +13,7 @@
 <hr>
 <h1>The Members of Barakuda_black</h1>
 <div style="display:inline; justify-content:space-between; align-items:center;">
-<div class="box" style="display:flex; flex:wrap;">
+<div class="box" style="display:flex; flex:wrap; width:8rem; height:auto;">
   <img src="assets\image\IMG-20260216-WA0285.jpg" style="height:auto; width:8rem; border-radius:100%;">
   <a href="https://github.com/sagara-ds">Sagara Dwi Septiansyah</a>
 </div>
