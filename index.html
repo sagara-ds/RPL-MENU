@@ -1,27 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPL.menu</title>
     <link rel="icon" type="image/x-icon" href="assets/image/RPL_LOGO2.png">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
-    
-    <!-- Feather Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap"
+        rel="stylesheet">
+
     <script src="https://unpkg.com/feather-icons"></script>
 
-    <!-- My style, My rule -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
-    <!-- Navbar start -->
     <nav class="navbar">
-        <a href="#"><img class="navbar-logo" src="assets/image/RPL_LOGO2.png"></a>
-        
+        <a href="#"><img class="navbar-logo" src="assets/image/RPL_LOGO2.png" alt="RPL Logo"></a>
+
         <div class="navbar-nav">
             <a href="#">home</a>
             <a href="#" id="menu">menu</a>
@@ -39,18 +38,11 @@
             <a href="#" id="hamburger-menu" title="menu"><i data-feather="menu"></i></a>
         </div>
     </nav>
-    <!-- Navbar end -->
-
-    <!-- Menu start -->
     <section class="product">
         <h1>-DAY 1-</h1>
         <div class="row" id="menu-container">
-            
         </div>
     </section>
-    <!-- Menu end -->
-
-    <!-- cart icons start -->
     <aside class="cart-panel" id="cartPanel">
         <div class="cart-header">
             <h2>Keranjang</h2>
@@ -61,14 +53,11 @@
         </div>
         <div class="cart-footer">
             <div class="cart-total">Total: IDR 0</div>
-            <button id="reset-cart-btn">Reset</button>
+            <button id="reset-cart-btn" type="button">Reset</button>
             <button class="checkout-btn" type="button">Check-out</button>
             <button id="print-receipt-btn" class="print-receipt-btn" type="button" hidden>Cetak Struk</button>
         </div>
     </aside>
-    <!-- cart icons end -->
-
-<!-- Modal Checkout Start -->
     <div id="checkout-modal" class="modal-overlay">
         <div class="modal-box">
             <h2>Data Pemesan</h2>
@@ -96,15 +85,12 @@
             </form>
         </div>
     </div>
-    <!-- Modal Checkout End -->
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/lightmode.js"></script>
 
-    <!-- Feather Icons -->
     <script>
         feather.replace();
     </script>
-
-    <!-- JS = JAWASKRIPSI -->
-    <script src="assets/js/script.js"></script>
-    <script src="assets/js/lightmode.js"></script>
 </body>
+
 </html>
