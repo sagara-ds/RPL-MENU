@@ -75,8 +75,6 @@ body {
     display: block;
 }
 
-
-
 #hamburger-menu {
     display: none;
 }
@@ -159,89 +157,6 @@ body {
 
 .product .row .menu-card p {
     margin: 0.5rem;
-}
-
-/* Media Queries */
-
-/* Laptop */
-@media (max-width: 1920px) {
-    html {
-        font-size: 80%;
-    }
-}
-
-/* Tablet */
-@media (max-width: 760px) {
-    html {
-        font-size: 60%;
-    }
-
-    .navbar {
-        justify-content: center;
-        align-items: center;
-        padding: 1rem 7%;
-    }
-
-    .navbar .navbar-extra {
-        position: absolute;
-        right: 2rem;
-    }
-
-    #hamburger-menu {
-        display:inline-block;
-    }
-
-    #home {
-        display: none;
-    }
-    
-    #about {
-        display: none;
-    }
-
-    .navbar .navbar-nav {
-        position: absolute;
-        top: 100%;
-        right: -100%;
-        background-color: var(--txt);
-        width: 30vw;
-        height: 100vh;
-        transition: 0.3s ease-in-out;
-    }
-
-    .navbar .navbar-nav.active {
-        right: 0;
-    }
-
-    .navbar .navbar-nav a {
-        display: inline-block;
-        padding-right: 100vw;
-        color: var(--bg);
-        margin: 2rem;
-    }
-
-    .product .row .menu-card {
-    padding: 0 3%;
-    }
-
-    .product .row .menu-card img {
-    width: 80%;
-    height: 7rem;
-    border-radius: 1rem;
-    }
-}
-
-/* Handphone */
-@media (max-width: 450px) {
-    html {
-        font-size: 50%;
-    }
-
-    .product .row .menu-card img {
-    width: 80%;
-    height: 10rem;
-    border-radius: 1rem;
-    }
 }
 
 /* Tambahan Shopping-cart */
@@ -403,17 +318,235 @@ body {
     background-color: rgb(93, 0, 0);
 }
 
+.print-receipt-btn {
+    width: 100%;
+    padding: 0.95rem 1rem;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 1rem;
+    border: 1px solid var(--primary);
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.print-receipt-btn:hover {
+    background: #0053b0;
+}
+
 .cart-toggle {
-        position: fixed;
-        right: 1rem;
-        bottom: 1rem;
-        z-index: 40;
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 40;
 }
 
 .cart-panel {
-        right: 0.8rem;
-        top: auto;
-        bottom: 1rem;
-        width: calc(100vw - 1.6rem);
-        max-height: 60vh;
+    right: 0.8rem;
+    top: auto;
+    bottom: 1rem;
+    width: calc(100vw - 1.6rem);
+    max-height: 60vh;
+}
+
+/* checkout Page */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Animasi hidden di awal */
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s ease;
+}
+
+/* onclick js */
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-box {
+    background-color: var(--bg);
+    border: 2px solid var(--primary);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    width: min(90%, 400px);
+    color: var(--txt);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    
+    /* fade in */
+  transform: scale(0.7);
+    opacity: 0;
+    transition: 0.3s ease-in-out;
+}
+
+.modal-overlay.show .modal-box {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.modal-box h2 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--txt);
+    font-family: inherit;
+    resize: vertical;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn-cancel, .btn-confirm {
+    flex: 1;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: inherit;
+}
+
+.btn-cancel {
+    background: transparent;
+    color: var(--txt);
+    border: 1px solid var(--txt);
+}
+
+.btn-confirm {
+    background: var(--primary);
+    color: #fff; /* Tetap putih agar kontras dengan warna primary */
+    border: 1px solid var(--primary);
+}
+
+.btn-cancel:hover { 
+    background: rgba(128, 128, 128, 0.2); 
+}
+
+/* halaman about */
+.cuapcuap {
+    text-align: center;
+    justify-content: center;
+    margin: 10rem;
+}
+
+.cuapcuap .poto{
+    height: auto;
+    width: 5rem;
+    
+}
+
+/* Media Queries */
+
+/* Laptop */
+@media (max-width: 1920px) {
+    html {
+        font-size: 80%;
+    }
+}
+
+/* Tablet */
+@media (max-width: 760px) {
+    html {
+        font-size: 60%;
+    }
+
+    .navbar {
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 7%;
+    }
+
+    .navbar .navbar-extra {
+        position: absolute;
+        right: 2rem;
+    }
+
+    #hamburger-menu {
+        display:inline-block;
+    }
+
+    #home {
+        display: none;
+    }
+    
+    #about {
+        display: none;
+    }
+
+    .navbar .navbar-nav {
+        position: absolute;
+        top: 100%;
+        right: -100%;
+        background-color: var(--txt);
+        width: 30vw;
+        height: 100vh;
+        transition: 0.3s ease-in-out;
+    }
+
+    .navbar .navbar-nav.active {
+        right: 0;
+    }
+
+    .navbar .navbar-nav a {
+        display: inline-block;
+        padding-right: 100vw;
+        color: var(--bg);
+        margin: 2rem;
+    }
+
+    .product .row .menu-card {
+    padding: 0 3%;
+    }
+
+    .product .row .menu-card img {
+    width: 80%;
+    height: 7rem;
+    border-radius: 1rem;
+    }
+}
+
+/* Handphone */
+@media (max-width: 450px) {
+    html {
+        font-size: 50%;
+    }
+
+    .product .row .menu-card img {
+    width: 80%;
+    height: 10rem;
+    border-radius: 1rem;
+    }
 }

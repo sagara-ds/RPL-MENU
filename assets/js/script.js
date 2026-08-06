@@ -4,6 +4,10 @@ const cartToggle = document.querySelector('.cart-toggle');
 const cartPanel = document.querySelector('#cartPanel');
 const cartClose = document.querySelector('.cart-close');
 const cartContainer = document.querySelector('.cart-container');
+const checkoutBtn = document.querySelector('.checkout-btn');
+const modalOverlay = document.querySelector('#checkout-modal');
+const btnBatal = document.querySelector('#btn-batal');
+const formCheckout = document.querySelector('#checkout-form');
 
 // Toggle menu hamburger
 hamburger.onclick = (e) => {
@@ -34,11 +38,11 @@ const cartList = document.querySelector('#cart-items');
 const cartTotal = document.querySelector('.cart-total');
 
 const menuData = [
-    { id: 1, name: 'Menu 1', price: 25000, img: 'assets/image/RPL_LOGO.png', stock: 10 },
-    { id: 2, name: 'Menu 2', price: 18000, img: 'assets/image/RPL_LOGO.png', stock: 15 },
-    { id: 3, name: 'Menu 3', price: 30000, img: 'assets/image/RPL_LOGO.png', stock: 5 },
-    { id: 4, name: 'Menu 4', price: 22000, img: 'assets/image/RPL_LOGO.png', stock: 8 },
-    { id: 5, name: 'Menu 5', price: 27000, img: 'assets/image/RPL_LOGO.png', stock: 12 }
+    { id: 1, name: 'Menu 1', price: 25000, img: 'assets/image/RPL_LOGO2.png', stock: 10 },
+    { id: 2, name: 'Menu 2', price: 18000, img: 'assets/image/RPL_LOGO2.png', stock: 15 },
+    { id: 3, name: 'Menu 3', price: 30000, img: 'assets/image/RPL_LOGO2.png', stock: 5 },
+    { id: 4, name: 'Menu 4', price: 22000, img: 'assets/image/RPL_LOGO2.png', stock: 8 },
+    { id: 5, name: 'Menu 5', price: 27000, img: 'assets/image/RPL_LOGO2.png', stock: 12 }
 ];
 
 const menuContainer = document.getElementById('menu-container');
@@ -146,6 +150,73 @@ function updateTotal() {
     }
 }
 
+function buildReceiptHtml(customer, items, total) {
+    const rows = items.map(item => `
+        <tr>
+            <td>${item.name}</td>
+            <td>${item.quantity}x</td>
+            <td>Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</td>
+        </tr>
+    `).join('');
+
+    return `<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Struk RPL.menu</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; color: #111; background: #f5f5f5; }
+    .container { display: flex; flex-direction: column; gap: 12px; }
+    .box { max-width: 420px; margin: auto; border: 1px solid #ddd; padding: 20px; border-radius: 12px; background: white; }
+    h2 { text-align: center; margin-bottom: 8px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { padding: 8px 0; border-bottom: 1px dashed #ccc; text-align: left; }
+    .total { font-weight: bold; font-size: 16px; margin-top: 12px; }
+    .print-btn { display: block; margin: 20px auto; padding: 12px 32px; background: #0064D4; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; }
+    .print-btn:hover { background: #0053b0; }
+    @media print {
+      .print-btn { display: none; }
+      body { background: white; padding: 0; }
+      .box { border: none; box-shadow: none; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box">
+      <h2>RPL.menu</h2>
+      <p style="text-align:center; margin:0 0 12px;">Struk Pembayaran</p>
+      <div><strong>Nama:</strong> ${customer.nama}</div>
+      <div><strong>Alamat:</strong> ${customer.alamat}</div>
+      <div><strong>Email:</strong> ${customer.email}</div>
+      <div><strong>Catatan:</strong> ${customer.catatan || '-'}</div>
+      <table>
+        <thead>
+          <tr><th>Menu</th><th>Qty</th><th>Subtotal</th></tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <div class="total">Total: Rp ${total.toLocaleString('id-ID')}</div>
+    </div>
+    <button class="print-btn" onclick="window.print()">🖨 Cetak Struk</button>
+  </div>
+</body>
+</html>`;
+}
+
+function openReceiptWindow(html) {
+    const newWindow = window.open('', '_blank', 'width=420,height=700');
+    if (!newWindow) {
+        alert('Popup diblokir browser. Izinkan popup untuk melihat struk.');
+        return false;
+    }
+
+    newWindow.document.write(html);
+    newWindow.document.close();
+    return true;
+}
+
 function toggleCart() {
     if (!cartPanel) return;
     cartPanel.classList.toggle('show');
@@ -160,6 +231,8 @@ cartToggle?.addEventListener('click', toggleCart);
 cartClose?.addEventListener('click', closeCart);
 
 const resetBtn = document.querySelector('#reset-cart-btn');
+const printReceiptBtn = document.querySelector('#print-receipt-btn');
+let lastReceiptUrl = '';
 
 if (resetBtn) {
     resetBtn.addEventListener('click', () => {
@@ -169,9 +242,88 @@ if (resetBtn) {
         }
         const konfirmasi = confirm('Yakin?');
         if (konfirmasi) {
-            cart.length = 0; // ngosongin array
+            cart.length = 0;
             renderCart();
+            if (printReceiptBtn) printReceiptBtn.hidden = true;
         }
+    });
+}
+if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', () => {
+        if (cart.length === 0) {
+            alert('Keranjang masih kosong, pilih menu terlebih dahulu!');
+            return;
+        }
+        modalOverlay.classList.add('show');
+        document.querySelector('#cartPanel').classList.remove('show');
+    });
+}
+
+
+if (btnBatal) {
+    btnBatal.addEventListener('click', () => {
+        modalOverlay.classList.remove('show');
+    });
+}
+
+
+if (formCheckout) {
+    formCheckout.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const nama = document.querySelector('#nama').value;
+        const alamat = document.querySelector('#alamat').value;
+        const email = document.querySelector('#email').value;
+        const catatan = document.querySelector('#catatan').value;
+        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/receipt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    customer: { nama, alamat, email, catatan },
+                    items: cart,
+                    total
+                })
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                if (result.ok) {
+                    lastReceiptUrl = result.receiptUrl;
+                    if (printReceiptBtn) {
+                        printReceiptBtn.hidden = false;
+                        printReceiptBtn.onclick = () => {
+                            window.open(lastReceiptUrl, '_blank');
+                        };
+                    }
+                }
+            } else {
+                throw new Error('server tidak merespons');
+            }
+        } catch (error) {
+            console.error('Gagal membuat struk dari server:', error);
+            const html = buildReceiptHtml({ nama, alamat, email, catatan }, cart, total);
+            openReceiptWindow(html);
+            if (printReceiptBtn) {
+                printReceiptBtn.hidden = false;
+                printReceiptBtn.onclick = () => {
+                    const receiptWindow = window.open('', '_blank', 'width=420,height=700');
+                    if (receiptWindow) {
+                        receiptWindow.document.write(html);
+                        receiptWindow.document.close();
+                    }
+                };
+            }
+        }
+
+        alert(`Mantap ${nama}! Pesananmu senilai Rp ${total.toLocaleString('id-ID')} berhasil dibuat!`);
+
+        formCheckout.reset();
+        modalOverlay.classList.remove('show');
+        cart.length = 0;
+        renderCart();
     });
 }
 renderMenu();

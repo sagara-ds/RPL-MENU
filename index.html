@@ -50,6 +50,7 @@
     </section>
     <!-- Menu end -->
 
+    <!-- cart icons start -->
     <aside class="cart-panel" id="cartPanel">
         <div class="cart-header">
             <h2>Keranjang</h2>
@@ -61,9 +62,41 @@
         <div class="cart-footer">
             <div class="cart-total">Total: IDR 0</div>
             <button id="reset-cart-btn">Reset</button>
-            <button class="checkout-btn" type="button">Bayar</button>
+            <button class="checkout-btn" type="button">Check-out</button>
+            <button id="print-receipt-btn" class="print-receipt-btn" type="button" hidden>Cetak Struk</button>
         </div>
     </aside>
+    <!-- cart icons end -->
+
+<!-- Modal Checkout Start -->
+    <div id="checkout-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h2>Data Pemesan</h2>
+            <form id="checkout-form">
+                <div class="input-group">
+                    <label for="nama">Nama</label>
+                    <input type="text" id="nama" required placeholder="masukkan nama">
+                </div>
+                <div class="input-group">
+                    <label for="alamat">Alamat</label>
+                    <input type="text" id="alamat" required placeholder="lokasi anda (contoh: 'XI AKL2')">
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="emailkamu67@gmail.com">
+                </div>
+                <div class="input-group">
+                    <label for="catatan">Catatan</label>
+                    <textarea id="catatan" rows="4" placeholder="catatan..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="btn-batal" class="btn-cancel">Batal</button>
+                    <button type="submit" id="btn-konfirmasi" class="btn-confirm">Konfirmasi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Modal Checkout End -->
 
     <!-- Feather Icons -->
     <script>
