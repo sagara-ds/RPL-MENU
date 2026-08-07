@@ -40,10 +40,16 @@ const cartTotal = document.querySelector(".cart-total");
 let menuData = [];
 
 async function loadMenu() {
-  const url = "http://localhost/RPL-MENU/get.php";
+  const url = "https://vrexdlklxjifxnmtyphs.supabase.co/rest/v1/menu?select=*";
 
   try {
-    const response = await fetch(url, { method: "GET", cache: "no-store" });
+    const response = await fetch(url, { method: "GET",
+    headers: {
+      "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw",
+      "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw",
+      "content-type": "application/json",
+    },
+    cache: "no-store" });
     const text = await response.text();
 
     if (!response.ok) {
@@ -90,8 +96,8 @@ function renderMenu(data = menuData) {
             <h3 class="menu-card-title">${menu.name}</h3>
             <img src="${menu.img || "assets/image/RPL_LOGO2.png"}" alt="${menu.name}" class="menu-card-img">
             <p class="price">IDR. ${menu.price.toLocaleString("id-ID")}</p>
-            <button class="menu-add-btn" type="button">Tambah</button>
             <p class="stock">STOK: <span class="stock-count">${menu.stock}</span></p>
+            <button class="menu-add-btn" type="button">Tambah</button>
         </div>
     `,
     )

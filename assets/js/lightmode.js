@@ -8,13 +8,16 @@ const enableLightmode = () => {
 
 const disableLightmode = () => {
     document.body.classList.remove('lightmode');
-    localStorage.setItem('lightmode', null);
+    localStorage.removeItem('lightmode');
 }
 
+if (lightmode === 'active') {
+    enableLightmode();
+}
 
-if(lightmode === "active") enableLightmode(); 
-
-themeSwitch.addEventListener('click', () => {
-    lightmode = localStorage.getItem('lightmode');
-    lightmode !== "active" ? enableLightmode() : disableLightmode();
-});
+if (themeSwitch) {
+    themeSwitch.addEventListener('click', () => {
+        lightmode = localStorage.getItem('lightmode');
+        lightmode !== 'active' ? enableLightmode() : disableLightmode();
+    });
+}

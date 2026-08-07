@@ -26,6 +26,8 @@ body {
     color: var(--txt);
 }
 
+body::-webkit-scrollbar {display: none;}
+
 /* navbar */
 .navbar {
     display: flex;
@@ -149,12 +151,16 @@ body {
     border-radius: 2rem;
     text-align: center;
     padding: 0 3%;
+    width: 15rem;
+    height: 20rem;
 }
 
 .product .row .menu-card img {
-    width: 80%;
+    width: 5rem;
     height: 5rem;
     border-radius: 1rem;
+    object-fit: cover;
+    overflow: hidden;
 }
 
 .product .row .menu-card .menu-card-title {
@@ -474,6 +480,96 @@ body {
     
 }
 
+/* Orders Panel */
+/* --- Styling Utama Panel --- */
+.orders-panel {
+    position: fixed;
+    top: 0;
+    right: -100%; 
+    width: 350px;
+    max-width: 100vw; 
+    height: 100vh;
+    background-color: #ffffff;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out; 
+    display: flex;
+    flex-direction: column;
+    
+    /* UBAH BAGIAN INI: Buat angkanya lebih besar dari z-index navbar kamu */
+    z-index: 9999; 
+    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Class untuk membuka panel */
+.orders-panel.open {
+    right: 0;
+}
+
+/* --- Bagian Header --- */
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eaeaea;
+    background-color: #f8f9fa;
+}
+
+.orders-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #333;
+}
+
+/* Tombol Close (Silang) */
+.orders-close {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s ease;
+}
+
+.orders-close:hover {
+    color: #dc3545; /* Berubah merah saat di-hover */
+}
+
+/* --- Bagian Konten/Item --- */
+.orders-items {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto; /* Memungkinkan scroll jika notifikasi banyak */
+    background-color: #fff;
+}
+
+.orders-empty {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+    margin-top: 50px;
+}
+
+/* Desain untuk item notifikasi baru (digunakan oleh JavaScript) */
+.notif-item {
+    background-color: #f0f7ff;
+    border-left: 4px solid #0d6efd;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    color: #333;
+    font-size: 0.95rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 /* Media Queries */
 
 /* Laptop */
@@ -486,7 +582,7 @@ body {
 /* Tablet */
 @media (max-width: 760px) {
     html {
-        font-size: 60%;
+        font-size: 70%;
     }
 
     .navbar {
@@ -547,12 +643,63 @@ body {
 /* Handphone */
 @media (max-width: 450px) {
     html {
-        font-size: 50%;
+        font-size: 60%;
+    }
+
+    .product {
+        padding: 10rem 3% 1.4rem;
+    }
+
+    .product h1 {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+
+    .product .row {
+        object-fit: cover;
+        overflow: hidden;
+        display: inline;
+        margin-top: 2rem;
+        padding: 0;
+    }
+
+    .product .row .menu-card {
+        width: 90vw;
+        height: 20rem;
+        justify-content: start;
+        padding: 1rem 3%;
+        margin-bottom: 1rem;
     }
 
     .product .row .menu-card img {
-    width: 80%;
-    height: 10rem;
-    border-radius: 1rem;
+        width: 15rem;
+        height: 15rem;
+        border-radius: 1rem;
+        object-fit: cover;
+        overflow: hidden;
+        z-index: 10;
+        position: absolute;
+        right: 40px;
+        margin-top: -3rem;
+    }
+
+    .product .row .menu-card .menu-card-title {
+        margin-top: 1.5rem;
+        text-align: start;
+        font-size: 2rem;
+    }
+
+    .product .row .menu-card p {
+        margin: 0.5rem;
+        text-align: start;
+        font-size: large;
+    }
+
+    .menu-add-btn {
+        left: 25px;
+        margin-top: 2rem;
+        position: absolute;
+        width: 15rem;
     }
 }
