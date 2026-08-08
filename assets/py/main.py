@@ -114,7 +114,6 @@ class ReceiptHandler(BaseHTTPRequestHandler):
     
    <div class="qr-container">
   <img src="/assets/image/{qr_filename}" alt="QR">
-  <div class="qr-text">Scan QRIS di atas untuk membayar</div>
 </div>
     
     <div class="footer">Terima kasih telah memesan di RPL.menu</div>
