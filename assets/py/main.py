@@ -74,28 +74,32 @@ class ReceiptHandler(BaseHTTPRequestHandler):
   <title>Struk RPL.menu</title>
   <style>
     body {{ font-family: Arial, sans-serif; padding: 24px; color: #111; }}
-    .box {{ max-width: 420px; margin: auto; border: 1px solid #ddd; padding: 20px; border-radius: 12px; }}
+    .box {{ max-width: 420px; margin: auto; border: 1px solid #ddd; padding: 20px; border-radius: 12px; background-color: #fff; }}
     h2 {{ text-align: center; margin-bottom: 8px; }}
     .meta {{ font-size: 14px; margin-bottom: 16px; }}
     table {{ width: 100%; border-collapse: collapse; }}
     th, td {{ padding: 8px 0; border-bottom: 1px dashed #ccc; text-align: left; }}
     .total {{ font-weight: bold; font-size: 16px; margin-top: 12px; }}
     .footer {{ margin-top: 16px; font-size: 13px; text-align: center; color: #666; }}
-    .qr-container {{ text-align: center; margin: 20px 0 10px 0; }}
-    .qr-container img {{ width: 30px; height: 40px; object-fit: contain; }}
-    .qr-text {{ font-size: 12px; color: #555; margin-top: 4px; text-align: center; }}
+    
+    /* CSS untuk QR Code */
+    .qr-container {{ text-align: center; margin: 20px 0 15px 0; }}
+    .qr-container img {{ width: 150px; height: 150px; object-fit: contain; }}
+    .qr-text {{ font-size: 12px; color: #555; margin-top: 8px; text-align: center; font-weight: bold; }}
   </style>
 </head>
 <body>
   <div class="box">
     <h2>RPL.menu</h2>
     <p style="text-align:center; margin: 0 0 12px;">Struk Pembayaran</p>
+    
     <div class="meta">
       <div><strong>Nama:</strong> {escape(str(customer.get('nama', '-')))}</div>
       <div><strong>Alamat:</strong> {escape(str(customer.get('alamat', '-')))}</div>
       <div><strong>Catatan:</strong> {escape(str(customer.get('catatan', '-')) or '-')}</div>
       <div><strong>Waktu:</strong> {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}</div>
     </div>
+    
     <table>
       <thead>
         <tr><th>Menu</th><th>Qty</th><th>Subtotal</th></tr>
@@ -104,11 +108,15 @@ class ReceiptHandler(BaseHTTPRequestHandler):
         {''.join(rows)}
       </tbody>
     </table>
+    
     <div class="total">Total: Rp {int(total):,}</div>
+    
+    <!-- Bagian QR Code (Menggunakan link testing) -->
     <div class="qr-container">
-      <img src="assets/image/Link-QR.png" alt="QR">
-      <div class="qr-text">Scan QRIS untuk pembayaran</div>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pembayaran+RPL+Menu" alt="QR Code QRIS">
+      <div class="qr-text">Scan QRIS di atas untuk membayar</div>
     </div>
+    
     <div class="footer">Terima kasih telah memesan di RPL.menu</div>
   </div>
 </body>
