@@ -81,6 +81,9 @@ class ReceiptHandler(BaseHTTPRequestHandler):
     th, td {{ padding: 8px 0; border-bottom: 1px dashed #ccc; text-align: left; }}
     .total {{ font-weight: bold; font-size: 16px; margin-top: 12px; }}
     .footer {{ margin-top: 16px; font-size: 13px; text-align: center; color: #666; }}
+    .qr-container {{ text-align: center; margin: 20px 0 10px 0; }}
+    .qr-container img {{ width: 30px; height: 40px; object-fit: contain; }}
+    .qr-text {{ font-size: 12px; color: #555; margin-top: 4px; text-align: center; }}
   </style>
 </head>
 <body>
@@ -102,6 +105,10 @@ class ReceiptHandler(BaseHTTPRequestHandler):
       </tbody>
     </table>
     <div class="total">Total: Rp {int(total):,}</div>
+    <div class="qr-container">
+      <img src="assets/image/Link-QR.png" alt="QR">
+      <div class="qr-text">Scan QRIS untuk pembayaran</div>
+    </div>
     <div class="footer">Terima kasih telah memesan di RPL.menu</div>
   </div>
 </body>
