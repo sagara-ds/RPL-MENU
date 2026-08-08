@@ -113,7 +113,7 @@ class ReceiptHandler(BaseHTTPRequestHandler):
     
     <!-- Bagian QR Code (Menggunakan link testing) -->
     <div class="qr-container">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Pembayaran+RPL+Menu" alt="QR Code QRIS">
+      <img src="../assets/image/Link-QR.png" alt="QR">
       <div class="qr-text">Scan QRIS di atas untuk membayar</div>
     </div>
     
