@@ -256,7 +256,6 @@ function buildReceiptHtml(customer, items, total, qrImage = "Link-QR.png") {
       <div class="total">Total: Rp ${total.toLocaleString("id-ID")}</div>
       <div class="qr-container">
         <img src="/assets/image/${qrImage}" alt="QR" />
-        <div class="qr-text">Scan QRIS di atas untuk membayar</div>
       </div>
     </div>
     <button class="print-btn" onclick="window.print()">🖨 Cetak Struk</button>
