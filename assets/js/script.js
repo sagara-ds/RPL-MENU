@@ -243,7 +243,6 @@ function buildReceiptHtml(customer, items, total) {
       <p style="text-align:center; margin:0 0 12px;">Struk Pembayaran</p>
       <div><strong>Nama:</strong> ${customer.nama}</div>
       <div><strong>Alamat:</strong> ${customer.alamat}</div>
-      <div><strong>Email:</strong> ${customer.email}</div>
       <div><strong>Catatan:</strong> ${customer.catatan || "-"}</div>
       <table>
         <thead>
@@ -325,7 +324,6 @@ if (formCheckout) {
 
     const nama = document.querySelector("#nama").value;
     const alamat = document.querySelector("#alamat").value;
-    const email = document.querySelector("#email").value;
     const catatan = document.querySelector("#catatan").value;
     const total = cart.reduce(
       (sum, item) => sum + item.price * item.quantity,
@@ -337,7 +335,7 @@ if (formCheckout) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          customer: { nama, alamat, email, catatan },
+          customer: { nama, alamat, catatan },
           items: cart,
           total,
         }),
@@ -360,7 +358,7 @@ if (formCheckout) {
     } catch (error) {
       console.error("Gagal membuat struk dari server:", error);
       const html = buildReceiptHtml(
-        { nama, alamat, email, catatan },
+        { nama, alamat, catatan },
         cart,
         total,
       );

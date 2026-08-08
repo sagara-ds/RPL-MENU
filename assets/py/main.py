@@ -90,7 +90,6 @@ class ReceiptHandler(BaseHTTPRequestHandler):
     <div class="meta">
       <div><strong>Nama:</strong> {escape(str(customer.get('nama', '-')))}</div>
       <div><strong>Alamat:</strong> {escape(str(customer.get('alamat', '-')))}</div>
-      <div><strong>Email:</strong> {escape(str(customer.get('email', '-')))}</div>
       <div><strong>Catatan:</strong> {escape(str(customer.get('catatan', '-')) or '-')}</div>
       <div><strong>Waktu:</strong> {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}</div>
     </div>
