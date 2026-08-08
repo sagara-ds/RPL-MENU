@@ -200,7 +200,7 @@ function updateTotal() {
   }
 }
 
-function buildReceiptHtml(customer, items, total) {
+function buildReceiptHtml(customer, items, total, qrImage = "Link-QR.png") {
   const rows = items
     .map(
       (item) => `
@@ -227,6 +227,9 @@ function buildReceiptHtml(customer, items, total) {
     table { width: 100%; border-collapse: collapse; margin-top: 12px; }
     th, td { padding: 8px 0; border-bottom: 1px dashed #ccc; text-align: left; }
     .total { font-weight: bold; font-size: 16px; margin-top: 12px; }
+    .qr-container { text-align: center; margin: 20px 0 15px 0; }
+    .qr-container img { width: 150px; height: 150px; object-fit: contain; }
+    .qr-text { font-size: 12px; color: #555; margin-top: 8px; text-align: center; font-weight: bold; }
     .print-btn { display: block; margin: 20px auto; padding: 12px 32px; background: #0064D4; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; }
     .print-btn:hover { background: #0053b0; }
     @media print {
@@ -251,6 +254,10 @@ function buildReceiptHtml(customer, items, total) {
         <tbody>${rows}</tbody>
       </table>
       <div class="total">Total: Rp ${total.toLocaleString("id-ID")}</div>
+      <div class="qr-container">
+        <img src="/assets/image/${qrImage}" alt="QR" />
+        <div class="qr-text">Scan QRIS di atas untuk membayar</div>
+      </div>
     </div>
     <button class="print-btn" onclick="window.print()">🖨 Cetak Struk</button>
   </div>
@@ -325,19 +332,8 @@ if (formCheckout) {
     const nama = document.querySelector("#nama").value;
     const alamat = document.querySelector("#alamat").value;
     const catatan = document.querySelector("#catatan").value;
-    const total = document.querySelector(
-      (sum, item) => sum + item.price * item.quantity,
-      0,
-    );
-    import logoImage from './assets/image/Link-QR.png';
-    const IMAFE_QR = logoImage;
-    fetch("http://127.0.0.1:8000/api/receipt", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    qrImage: IMAGE_QR 
-  })
-});
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const qrImage = "Link-QR.png";
 
     try {
       const response = await fetch("http://127.0.0.1:8000/api/receipt", {
@@ -347,6 +343,7 @@ if (formCheckout) {
           customer: { nama, alamat, catatan },
           items: cart,
           total,
+          qrImage,
         }),
       });
 

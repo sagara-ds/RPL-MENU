@@ -20,7 +20,7 @@ class ReceiptHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
-        if parsed.path.startswith("/assets/receipts/"):
+        if parsed.path.startswith("/assets/"):
             self.serve_file(parsed.path.lstrip("/"))
             return
 
