@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPL Online Orders</title>
+    <link rel="icon" href="image/RPL_LOGO2.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+<!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap"rel="stylesheet">
+ <!-- feather icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+<!-- my style gweh -->
+</head>
+<body class="bg-pattern">
+<!-- Navbar start -->
+    <nav class="navbar">
+        <a href="#"><img class="navbar-logo" src="image/RPL_LOGO2.png" alt="RPL Logo"></a>
+
+        <div class="navbar-extra">
+            <button class="cart-toggle" type="button" title="shopping cart">
+                <i data-feather="shopping-cart"></i>
+            </button>
+            <a href="#" id="home" title="home"><i data-feather="home"></i></a>
+            <button class="theme-switch" title="switch mode">
+                <i data-feather="sun" id="light"></i>
+                <i data-feather="moon" id="dark"></i>
+            </button>
+        </div>
+    </nav>
+<!-- Navbar end -->
+<!-- Hero section start -->
+    <section class="hero">
+        <h1>Selamat Datang di RPL Online Orders</h1>
+        <p>Pesan makanan favoritmu dengan mudah!</p>
+    </section>
+<!-- Hero section end -->
+<!-- Product Section start -->
+<section class="product">
+        <div class="row" id="menu-container">
+            <div class="menu-card">
+                <img src="image/product/ayam suir.jpg" alt="Rice Bowl">
+                <h3 class="menu-card-title">Rice Bowl Ayam Suir</h3>
+                <p>Harga: IDR 15.000</p>
+                <button class="menu-add-btn">Tambah</button>
+            </div>
+            <div class="menu-card">
+                <img src="image/product/katsu.jpg" alt="Rice Bowl">
+                <h3 class="menu-card-title">Rice Bowl Katsu</h3>
+                <p>Harga: IDR 15.000</p>
+                <button class="menu-add-btn">Tambah</button>
+            </div>
+            <div class="menu-card">
+                <img src="image/product/pop matah.jpg" alt="Pop Matah">
+                <h3 class="menu-card-title">Rice Bowl Pop Matah</h3>
+                <p>Harga: IDR 15.000</p>
+                <button class="menu-add-btn">Tambah</button>
+            </div>
+            <div class="menu-card">
+                <img src="image/product/Kopi.png" alt="Kopi Gula Aren">
+                <h3 class="menu-card-title">Kopi Gula Aren</h3>
+                <p>Harga: IDR 12.000</p>
+                <button class="menu-add-btn">Tambah</button>
+            </div>
+            <div class="menu-card">
+                <img src="image/product/ketan susu.jpg" alt="Ketan Susu">
+                <h3 class="menu-card-title">Ketan Susu</h3>
+                <p>Harga: IDR 15.000</p>
+                <button class="menu-add-btn">Tambah</button>
+            </div>
+            <div class="menu-card">
+                <img src="image/product/lumpia ubi.jpg" alt="Lumpia Ubi">
+                <h3 class="menu-card-title">Lumpia Ubi</h3>
+                <p>Harga: IDR 15.000</p>
+                <button class="menu-add-btn">Tambah</button>
+            </div>
+            <div class="menu-card">
+                <img src="image/product/makroni.jpg" alt="makroni">
+                <h3 class="menu-card-title">Rice Bowl Makroni</h3>
+                <p>Harga: IDR 15.000</p>
+                <button class="menu-add-btn">Tambah</button>
+            </div>
+            <div class="menu-card">
+                <img src="image/product/mayo.jpeg" alt="Risol Mayo">
+                <h3 class="menu-card-title">Risol Mayo</h3>
+                <p>Harga: IDR 15.000</p>
+                <button class="menu-add-btn">Tambah</button>
+            </div>
+            <div class="menu-card">
+                <img src="image/product/setup roti.jpg" alt="stup roti">
+                <h3 class="menu-card-title">Stup Roti</h3>
+                <p>Harga: IDR 15.000</p>
+                <button class="menu-add-btn">Tambah</button>
+            </div>
+            <div class="menu-card">
+                <img src="image/product/wonton.jpg" alt="wonton">
+                <h3 class="menu-card-title">Wonton</h3>
+                <p>Harga: IDR 15.000</p>
+                <button class="menu-add-btn">Tambah</button>
+            </div>
+        </div>
+    </section>
+    <aside class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <h2>Keranjang</h2>
+            <button class="cart-close" type="button">×</button>
+        </div>
+        <div id="cart-items" class="cart-items">
+            <p class="cart-empty">Belum ada item di keranjang.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">Total: IDR 0</div>
+            <button id="reset-cart-btn" type="button">Reset</button>
+            <button class="checkout-btn" type="button">Check-out</button>
+            <button id="print-receipt-btn" class="print-receipt-btn" type="button" hidden>Cetak Struk</button>
+        </div>
+    </aside>
+<!-- Product Section end -->
+<!-- Form data pemesan start -->
+    <div id="checkout-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h2>Data Pemesan</h2>
+            <form id="checkout-form">
+                <div class="input-group">
+                    <label for="nama">Nama</label>
+                    <input type="text" id="nama" required placeholder="contoh: 'Muhammad Budi'">
+                </div>
+                <div class="input-group">
+                    <label for="alamat">Alamat</label>
+                    <input type="text" id="alamat" required placeholder="contoh: 'XI PPLG / LAB RPL'">
+                </div>
+                <div class="input-group">
+                    <label for="catatan">Catatan</label>
+                    <textarea id="catatan" rows="4" placeholder="catatan..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="btn-batal" class="btn-cancel">Batal</button>
+                    <button type="submit" id="btn-konfirmasi" class="btn-confirm">Chat WA</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<!-- Form data pemesan end -->
+<!-- Feather Icons start -->
+    <script>
+        feather.replace();
+    </script>
+<!-- Feather Icons end -->
+<!-- JS = Jawa Skirpsi start-->
+    <script src="javascript/script.js"></script>
+<!-- JS = Jawa Skirpsi end -->
+<!-- Theme switcher start -->
+    <script src="javascript/themeSwitch.js"></script>
+<!-- Theme switcher end -->
+</body>
+</html>
