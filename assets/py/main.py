@@ -46,6 +46,7 @@ class ReceiptHandler(BaseHTTPRequestHandler):
         self.wfile.write(json.dumps({"ok": True, "receiptUrl": receipt_url}).encode("utf-8"))
 
     def generate_receipt(self, data):
+        qr_filename = data.get("qrImage", "Link-QR.png")
         customer = data.get("customer", {})
         items = data.get("items", [])
         total = data.get("total", 0)
@@ -111,11 +112,10 @@ class ReceiptHandler(BaseHTTPRequestHandler):
     
     <div class="total">Total: Rp {int(total):,}</div>
     
-    <!-- Bagian QR Code (Menggunakan link testing) -->
-    <div class="qr-container">
-      <img src="../assets/image/Link-QR.png" alt="QR">
-      <div class="qr-text">Scan QRIS di atas untuk membayar</div>
-    </div>
+   <div class="qr-container">
+  <img src="/assets/image/{qr_filename}" alt="QR">
+  <div class="qr-text">Scan QRIS di atas untuk membayar</div>
+</div>
     
     <div class="footer">Terima kasih telah memesan di RPL.menu</div>
   </div>

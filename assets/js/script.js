@@ -325,10 +325,19 @@ if (formCheckout) {
     const nama = document.querySelector("#nama").value;
     const alamat = document.querySelector("#alamat").value;
     const catatan = document.querySelector("#catatan").value;
-    const total = cart.reduce(
+    const total = document.querySelector(
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
+    import logoImage from './assets/image/Link-QR.png';
+    const IMAFE_QR = logoImage;
+    fetch("http://127.0.0.1:8000/api/receipt", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    qrImage: IMAGE_QR 
+  })
+});
 
     try {
       const response = await fetch("http://127.0.0.1:8000/api/receipt", {
