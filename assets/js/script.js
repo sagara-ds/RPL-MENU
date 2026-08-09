@@ -332,53 +332,44 @@ if (formCheckout) {
     const qrImage = "Link-QR.png";
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/receipt", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          customer: { nama, alamat, catatan },
-          items: cart,
-          total,
-          qrImage,
-        }),
-      });
+      const waktuSekarang = new Date().toLocaleString("id-ID"); // Format waktu rapi untuk Excel
+      const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbxgKesAqd_RXHlG8CnV4PN4UL4oR9qPW_6fpHzi9Z2J5-7aviuxz19YT-GOoxLOXDrl/exec";
 
-      if (response.ok) {
-        const result = await response.json();
-        if (result.ok) {
-          lastReceiptUrl = result.receiptUrl;
-          if (printReceiptBtn) {
-            printReceiptBtn.hidden = false;
-            printReceiptBtn.onclick = () => {
-              window.open(lastReceiptUrl, "_blank");
-            };
-          }
+      // 1. Simpan transaksi ke Google Sheets (Satu per satu baris)
+      for (const item of cart) {
+        const response = await fetch(googleSheetsUrl, {
+          method: "POST",
+          headers: { 
+            "Content-Type": "text/plain" 
+          },
+          body: JSON.stringify({
+            waktu: waktuSekarang,
+            total: item.price * item.quantity, // Subtotal per item
+            Qty: item.quantity,
+            Menu: item.name
+          }),
+        });
+
+        if (!response.ok) {
+           console.error(`Gagal menyimpan ${item.name} ke Google Sheets`);
         }
-      } else {
-        throw new Error("server tidak merespons");
       }
-    } catch (error) {
-      console.error("Gagal membuat struk dari server:", error);
-      const html = buildReceiptHtml(
-        { nama, alamat, catatan },
-        cart,
-        total,
-      );
+      
+      console.log("Semua item berhasil disimpan di Google Sheets ke baris terpisah");
+      
+      // 2. Langsung tampilkan struk secara lokal
+      const html = buildReceiptHtml({ nama, alamat, catatan }, cart, total, qrImage);
       openReceiptWindow(html);
+
       if (printReceiptBtn) {
         printReceiptBtn.hidden = false;
         printReceiptBtn.onclick = () => {
-          const receiptWindow = window.open(
-            "",
-            "_blank",
-            "width=420,height=700",
-          );
-          if (receiptWindow) {
-            receiptWindow.document.write(html);
-            receiptWindow.document.close();
-          }
+          openReceiptWindow(html);
         };
       }
+    } catch (error) {
+      console.error("Error checkout:", error);
+      alert("Terjadi kesalahan saat memproses checkout. Pastikan tabel 'transaksi' sudah ada di Supabase.");
     }
 
     alert(

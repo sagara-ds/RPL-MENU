@@ -5,9 +5,18 @@ from pathlib import Path
 from urllib.parse import urlparse
 from html import escape
 
+try:
+    import openpyxl
+    HAS_OPENPYXL = True
+except ImportError:
+    HAS_OPENPYXL = False
+    import csv
+
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 RECEIPTS_DIR = PROJECT_ROOT / "assets" / "receipts"
 RECEIPTS_DIR.mkdir(parents=True, exist_ok=True)
+EXCEL_FILE = PROJECT_ROOT / "transaksi.xlsx"
+CSV_FILE = PROJECT_ROOT / "transaksi.csv"
 
 
 class ReceiptHandler(BaseHTTPRequestHandler):
@@ -38,6 +47,8 @@ class ReceiptHandler(BaseHTTPRequestHandler):
 
         receipt_path = self.generate_receipt(data)
         receipt_url = f"http://127.0.0.1:8000/{receipt_path.relative_to(PROJECT_ROOT).as_posix()}"
+
+        self.save_transaction(data)
 
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
@@ -123,6 +134,39 @@ class ReceiptHandler(BaseHTTPRequestHandler):
 """
         receipt_path.write_text(html_content, encoding="utf-8")
         return receipt_path
+
+    def save_transaction(self, data):
+        customer = data.get("customer", {})
+        items = data.get("items", [])
+        total = data.get("total", 0)
+        waktu = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        nama = customer.get("nama", "-")
+        alamat = customer.get("alamat", "-")
+        catatan = customer.get("catatan", "-")
+
+        items_str = ", ".join([f"{item.get('name', 'Menu')} ({item.get('quantity', 1)}x)" for item in items])
+
+        if HAS_OPENPYXL:
+            file_exists = EXCEL_FILE.exists()
+            if file_exists:
+                wb = openpyxl.load_workbook(EXCEL_FILE)
+                ws = wb.active
+            else:
+                wb = openpyxl.Workbook()
+                ws = wb.active
+                ws.title = "Data Transaksi"
+                ws.append(["Waktu", "Nama Customer", "Alamat", "Catatan", "Pesanan", "Total (Rp)"])
+            
+            ws.append([waktu, nama, alamat, catatan, items_str, total])
+            wb.save(EXCEL_FILE)
+        else:
+            file_exists = CSV_FILE.exists()
+            with open(CSV_FILE, mode='a', newline='', encoding='utf-8') as f:
+                writer = csv.writer(f)
+                if not file_exists:
+                    writer.writerow(["Waktu", "Nama Customer", "Alamat", "Catatan", "Pesanan", "Total (Rp)"])
+                writer.writerow([waktu, nama, alamat, catatan, items_str, total])
+
 
     def serve_file(self, relative_path):
         target = (PROJECT_ROOT / relative_path).resolve()

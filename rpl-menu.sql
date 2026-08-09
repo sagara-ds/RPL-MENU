@@ -12,3 +12,23 @@ INSERT INTO menu (id, name, price, img, stock) VALUES
 (9, 'Makroni', 27000, 'assets/image/makroni.jpg', 12),
 (10, 'Ayam Suir', 27000, 'assets/image/ayam suir.jpg', 12),
 (11, 'Risol Mayo', 27000, 'assets/image/mayo.jpeg', 12);
+
+-- Tabel Transaksi (baru ditambahkan untuk Vercel/Supabase)
+CREATE TABLE IF NOT EXISTS transaksi (
+    id SERIAL PRIMARY KEY,
+    waktu TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+    nama_customer TEXT,
+    alamat TEXT,
+    catatan TEXT,
+    pesanan TEXT,
+    total NUMERIC
+);
+
+-- Mengaktifkan akses anonim untuk insert data transaksi
+ALTER TABLE transaksi ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow anonymous inserts" ON transaksi
+    FOR INSERT WITH CHECK (true);
+    
+CREATE POLICY "Allow anonymous select" ON transaksi
+    FOR SELECT USING (true);
