@@ -43,13 +43,15 @@ async function loadMenu() {
   const url = "https://vrexdlklxjifxnmtyphs.supabase.co/rest/v1/menu?select=*";
 
   try {
-    const response = await fetch(url, { method: "GET",
-    headers: {
-      "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw",
-      "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw",
-      "content-type": "application/json",
-    },
-    cache: "no-store" });
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw",
+        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw",
+        "content-type": "application/json",
+      },
+      cache: "no-store"
+    });
     const text = await response.text();
 
     if (!response.ok) {
@@ -332,32 +334,32 @@ if (formCheckout) {
     const qrImage = "Link-QR.png";
 
     try {
-      const waktuSekarang = new Date().toLocaleString("id-ID"); // Format waktu rapi untuk Excel
+      const menuStr = cart.map(item => item.name).join(", ");
+      const qtyStr = cart.map(item => item.quantity).join(", ");
+      const waktuSekarang = new Date().toLocaleString("id-ID");
+
       const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbxgKesAqd_RXHlG8CnV4PN4UL4oR9qPW_6fpHzi9Z2J5-7aviuxz19YT-GOoxLOXDrl/exec";
 
-      // 1. Simpan transaksi ke Google Sheets (Satu per satu baris)
-      for (const item of cart) {
-        const response = await fetch(googleSheetsUrl, {
-          method: "POST",
-          headers: { 
-            "Content-Type": "text/plain" 
-          },
-          body: JSON.stringify({
-            waktu: waktuSekarang,
-            total: item.price * item.quantity, // Subtotal per item
-            Qty: item.quantity,
-            Menu: item.name
-          }),
-        });
+      // Save di GGL sheet
+      const response = await fetch(googleSheetsUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain"
+        },
+        body: JSON.stringify({
+          waktu: waktuSekarang,
+          total: total,
+          Qty: qtyStr,
+          Menu: menuStr
+        }),
+      });
 
-        if (!response.ok) {
-           console.error(`Gagal menyimpan ${item.name} ke Google Sheets`);
-        }
+      if (!response.ok) {
+        throw new Error("Gagal menyimpan transaksi ke Google Sheets");
       }
-      
-      console.log("Semua item berhasil disimpan di Google Sheets ke baris terpisah");
-      
-      // 2. Langsung tampilkan struk secara lokal
+
+      console.log("Transaksi berhasil disimpan di Google Sheets");
+
       const html = buildReceiptHtml({ nama, alamat, catatan }, cart, total, qrImage);
       openReceiptWindow(html);
 
@@ -369,7 +371,7 @@ if (formCheckout) {
       }
     } catch (error) {
       console.error("Error checkout:", error);
-      alert("Terjadi kesalahan saat memproses checkout. Pastikan tabel 'transaksi' sudah ada di Supabase.");
+      alert("Terjadi kesalahan saat memproses checkout. Pastikan tabel 'transaksi' sudah ada.");
     }
 
     alert(
