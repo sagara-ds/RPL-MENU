@@ -111,7 +111,7 @@ if (formCheckout) {
         e.preventDefault();
 
 
-        const nomorAdminWA = "6287846895031"; 
+        const nomorAdminWA = "6281312944652"; 
 
         const nama = document.querySelector('#nama').value;
         const alamat = document.querySelector('#alamat').value;
