@@ -16,9 +16,6 @@
   <h3>Handling: Backend</h3>
   <img src="assets\image\IMG-20260216-WA0285.jpg" style="height:auto; width:8rem; border-radius:100%;">
   <a href="https://github.com/sagara-ds"><p>Sagara Dwi Septiansyah</p></a>
-  <h3>Handling: Backend</h3>
-  <img src="assets\image\Screenshot 2026-08-05 203119.png" style="height:auto; width:8rem; border-radius:100%;">
-  <a href="https://github.com/zannnrmdni"><p>Fauzan Jamal Ramdani</p></a>
   <h3>Handling: Database</h3>
   <img src="assets\image\Screenshot 2026-08-05 204705.png" style="height:auto; width:8rem; border-radius:100%;">
   <a href="https://github.com/sayyidlghzl-ctrl"><p>M. Sayyid Al-Ghifari</p></a>

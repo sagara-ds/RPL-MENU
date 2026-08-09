@@ -20,7 +20,7 @@ class ReceiptHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
-        if parsed.path.startswith("/assets/receipts/"):
+        if parsed.path.startswith("/assets/"):
             self.serve_file(parsed.path.lstrip("/"))
             return
 
@@ -46,6 +46,7 @@ class ReceiptHandler(BaseHTTPRequestHandler):
         self.wfile.write(json.dumps({"ok": True, "receiptUrl": receipt_url}).encode("utf-8"))
 
     def generate_receipt(self, data):
+        qr_filename = data.get("qrImage", "Link-QR.png")
         customer = data.get("customer", {})
         items = data.get("items", [])
         total = data.get("total", 0)
@@ -74,26 +75,32 @@ class ReceiptHandler(BaseHTTPRequestHandler):
   <title>Struk RPL.menu</title>
   <style>
     body {{ font-family: Arial, sans-serif; padding: 24px; color: #111; }}
-    .box {{ max-width: 420px; margin: auto; border: 1px solid #ddd; padding: 20px; border-radius: 12px; }}
+    .box {{ max-width: 420px; margin: auto; border: 1px solid #ddd; padding: 20px; border-radius: 12px; background-color: #fff; }}
     h2 {{ text-align: center; margin-bottom: 8px; }}
     .meta {{ font-size: 14px; margin-bottom: 16px; }}
     table {{ width: 100%; border-collapse: collapse; }}
     th, td {{ padding: 8px 0; border-bottom: 1px dashed #ccc; text-align: left; }}
     .total {{ font-weight: bold; font-size: 16px; margin-top: 12px; }}
     .footer {{ margin-top: 16px; font-size: 13px; text-align: center; color: #666; }}
+    
+    /* CSS untuk QR Code */
+    .qr-container {{ text-align: center; margin: 20px 0 15px 0; }}
+    .qr-container img {{ width: 150px; height: 150px; object-fit: contain; }}
+    .qr-text {{ font-size: 12px; color: #555; margin-top: 8px; text-align: center; font-weight: bold; }}
   </style>
 </head>
 <body>
   <div class="box">
     <h2>RPL.menu</h2>
     <p style="text-align:center; margin: 0 0 12px;">Struk Pembayaran</p>
+    
     <div class="meta">
       <div><strong>Nama:</strong> {escape(str(customer.get('nama', '-')))}</div>
       <div><strong>Alamat:</strong> {escape(str(customer.get('alamat', '-')))}</div>
-      <div><strong>Email:</strong> {escape(str(customer.get('email', '-')))}</div>
       <div><strong>Catatan:</strong> {escape(str(customer.get('catatan', '-')) or '-')}</div>
       <div><strong>Waktu:</strong> {datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')}</div>
     </div>
+    
     <table>
       <thead>
         <tr><th>Menu</th><th>Qty</th><th>Subtotal</th></tr>
@@ -102,7 +109,13 @@ class ReceiptHandler(BaseHTTPRequestHandler):
         {''.join(rows)}
       </tbody>
     </table>
+    
     <div class="total">Total: Rp {int(total):,}</div>
+    
+   <div class="qr-container">
+  <img src="/assets/image/{qr_filename}" alt="QR">
+</div>
+    
     <div class="footer">Terima kasih telah memesan di RPL.menu</div>
   </div>
 </body>
