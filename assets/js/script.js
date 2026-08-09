@@ -334,29 +334,26 @@ if (formCheckout) {
     const qrImage = "Link-QR.png";
 
     try {
-      const menuStr = cart.map(item => item.name).join(", ");
-      const qtyStr = cart.map(item => item.quantity).join(", ");
       const waktuSekarang = new Date().toLocaleString("id-ID");
-
       const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbxgKesAqd_RXHlG8CnV4PN4UL4oR9qPW_6fpHzi9Z2J5-7aviuxz19YT-GOoxLOXDrl/exec";
 
-      // Save di GGL sheet
-      const response = await fetch(googleSheetsUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "text/plain"
-        },
-        body: JSON.stringify({
-          waktu: waktuSekarang,
-          total: total,
-          Qty: qtyStr,
-          Menu: menuStr
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Gagal menyimpan transaksi ke Google Sheets");
+      // Kirim setiap menu sebagai baris terpisah di Google Sheets
+      for (const item of cart) {
+        await fetch(googleSheetsUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "text/plain"
+          },
+          body: JSON.stringify({
+            waktu: waktuSekarang,
+            Menu: item.name,
+            Qty: item.quantity,
+            total: item.price * item.quantity
+          }),
+        });
       }
+
+      console.log("Semua item berhasil disimpan ke Google Sheets");
 
       console.log("Transaksi berhasil disimpan di Google Sheets");
 
