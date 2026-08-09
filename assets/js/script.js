@@ -205,8 +205,8 @@ function buildReceiptHtml(customer, items, total) {
     .map(
       (item) => `
         <tr>
+            <td>${item.quantity}</td>
             <td>${item.name}</td>
-            <td>${item.quantity}x</td>
             <td>Rp ${(item.price * item.quantity).toLocaleString("id-ID")}</td>
         </tr>
     `,
@@ -246,9 +246,6 @@ function buildReceiptHtml(customer, items, total) {
       <div><strong>Email:</strong> ${customer.email}</div>
       <div><strong>Catatan:</strong> ${customer.catatan || "-"}</div>
       <table>
-        <thead>
-          <tr><th>Menu</th><th>Qty</th><th>Subtotal</th></tr>
-        </thead>
         <tbody>${rows}</tbody>
       </table>
       <div class="total">Total: Rp ${total.toLocaleString("id-ID")}</div>
