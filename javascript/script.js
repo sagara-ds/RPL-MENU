@@ -64,7 +64,7 @@ async function loadMenu() {
 function getLocalImage(supabaseImg) {
     if (!supabaseImg) return 'image/RPL_LOGO2.png';
     const filename = supabaseImg.split('/').pop();
-    return `image/product/${filename}`;
+    return `image/product_D2/${filename}`;
 }
 
 // ============ RENDER MENU ============
