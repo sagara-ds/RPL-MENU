@@ -149,7 +149,7 @@ body::-webkit-scrollbar {
     border-radius: 1rem;
     position: absolute;
     margin-top: 2rem;
-    right: 2.1rem;
+    right: 10%;
     object-fit: cover;
     overflow: hidden;
 }
@@ -161,8 +161,14 @@ body::-webkit-scrollbar {
     width: 35%;
 }
 
+.product .row .menu-card .stock-label {
+    margin: 5rem 0 0;
+    font-size: 90%;
+    z-index: 10;
+}
+
 .product .row .menu-card p {
-    margin: 10% 0 0;
+    margin: 0.5rem 0 0;
     font-size: 90%;
     z-index: 10;
 }
