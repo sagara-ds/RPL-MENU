@@ -336,6 +336,12 @@ if (formCheckout) {
     try {
       const waktuSekarang = new Date().toLocaleString("id-ID");
       const googleSheetsUrl = "https://script.google.com/macros/s/AKfycbxgKesAqd_RXHlG8CnV4PN4UL4oR9qPW_6fpHzi9Z2J5-7aviuxz19YT-GOoxLOXDrl/exec";
+      const btnKonfirmasi = document.querySelector("#btn-konfirmasi");
+      
+      if (btnKonfirmasi) {
+        btnKonfirmasi.textContent = "Memproses...";
+        btnKonfirmasi.disabled = true;
+      }
 
       // Kirim setiap menu sebagai baris terpisah di Google Sheets
       for (const item of cart) {
@@ -355,8 +361,6 @@ if (formCheckout) {
 
       console.log("Semua item berhasil disimpan ke Google Sheets");
 
-      console.log("Transaksi berhasil disimpan di Google Sheets");
-
       const html = buildReceiptHtml({ nama, alamat, catatan }, cart, total, qrImage);
       openReceiptWindow(html);
 
@@ -366,19 +370,25 @@ if (formCheckout) {
           openReceiptWindow(html);
         };
       }
+      
+      alert(
+        `Mantap ${nama}! Pesananmu senilai Rp ${total.toLocaleString("id-ID")} berhasil dibuat!`,
+      );
+
+      formCheckout.reset();
+      modalOverlay.classList.remove("show");
+      cart.length = 0;
+      renderCart();
     } catch (error) {
       console.error("Error checkout:", error);
-      alert("Terjadi kesalahan saat memproses checkout. Pastikan tabel 'transaksi' sudah ada.");
+      alert("Terjadi kesalahan saat checkout. Silakan coba lagi.");
+    } finally {
+      const btnKonfirmasi = document.querySelector("#btn-konfirmasi");
+      if (btnKonfirmasi) {
+        btnKonfirmasi.textContent = "Konfirmasi";
+        btnKonfirmasi.disabled = false;
+      }
     }
-
-    alert(
-      `Mantap ${nama}! Pesananmu senilai Rp ${total.toLocaleString("id-ID")} berhasil dibuat!`,
-    );
-
-    formCheckout.reset();
-    modalOverlay.classList.remove("show");
-    cart.length = 0;
-    renderCart();
   });
 }
 renderMenu();
