@@ -323,7 +323,7 @@ body::-webkit-scrollbar {
     width: 50%;
     padding: 0.95rem 1rem;
     background: var(--bg);
-    color: rgb(201, 0, 0);
+    color: var(--txt);
     border-radius: 1rem;
     border: 1px solid var(--primary);
     cursor: pointer;

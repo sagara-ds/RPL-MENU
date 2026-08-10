@@ -82,10 +82,10 @@ function renderMenu() {
             <h3 class="menu-card-title">${menu.name}</h3>
             <p>Harga: IDR ${menu.price.toLocaleString('id-ID')}</p>
             <p class="stock-label ${menu.stock <= 0 ? 'stock-empty' : menu.stock <= 3 ? 'stock-low' : ''}">
-                Stok: ${menu.stock <= 0 ? 'Habis' : menu.stock}
+                Stok: ${menu.stock <= 0 ? 'SOLD-OUT!' : menu.stock}
             </p>
             <button class="menu-add-btn" ${menu.stock <= 0 ? 'disabled' : ''}>
-                ${menu.stock <= 0 ? '✕ Habis' : 'Tambah'}
+                ${menu.stock <= 0 ? '✕' : 'Tambah'}
             </button>
         </div>
     `).join('');
