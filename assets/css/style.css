@@ -40,7 +40,7 @@ body::-webkit-scrollbar {display: none;}
     top: 0;
     left: 0;
     right:0;
-    z-index: 9999;
+    z-index: 30;
 }
 
 .navbar .navbar-logo {
@@ -222,7 +222,7 @@ body::-webkit-scrollbar {display: none;}
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    z-index: 30;
+    z-index: 999;
 }
 
 .cart-panel.show {
@@ -350,14 +350,6 @@ body::-webkit-scrollbar {display: none;}
     right: 1rem;
     bottom: 1rem;
     z-index: 40;
-}
-
-.cart-panel {
-    right: 0.8rem;
-    top: auto;
-    bottom: 1rem;
-    width: calc(100vw - 1.6rem);
-    max-height: 60vh;
 }
 
 /* checkout Page */

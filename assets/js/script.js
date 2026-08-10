@@ -99,7 +99,9 @@ function renderMenu(data = menuData) {
             <img src="${menu.img || "assets/image/RPL_LOGO2.png"}" alt="${menu.name}" class="menu-card-img">
             <p class="price">IDR. ${menu.price.toLocaleString("id-ID")}</p>
             <p class="stock">STOK: <span class="stock-count">${menu.stock}</span></p>
-            <button class="menu-add-btn" type="button">Tambah</button>
+            <button class="menu-add-btn" type="button" ${menu.stock <= 0 ? 'disabled style="background:gray;cursor:not-allowed;"' : ''}>
+              ${menu.stock <= 0 ? 'Habis' : 'Tambah'}
+            </button>
         </div>
     `,
     )
@@ -116,10 +118,9 @@ function attachAddButtons() {
 
       const item = {
         id: card.dataset.id,
-        name:
-          card.dataset.name ||
-          card.querySelector(".menu-card-title")?.textContent.trim(),
+        name: card.dataset.name || card.querySelector(".menu-card-title")?.textContent.trim(),
         price: Number(card.dataset.price) || 0,
+        stock: menuData.find(m => String(m.id) === card.dataset.id)?.stock || 0,
         quantity: 1,
       };
 
@@ -134,6 +135,10 @@ function addToCart(item) {
   const existing = cart.find((product) => product.id === item.id);
 
   if (existing) {
+    if (existing.quantity >= item.stock) {
+      alert(`Stok ${item.name} hanya tersisa ${item.stock}!`);
+      return;
+    }
     existing.quantity += 1;
   } else {
     cart.push({ ...item });
@@ -145,6 +150,11 @@ function addToCart(item) {
 function changeQuantity(id, delta) {
   const item = cart.find((product) => product.id === id);
   if (!item) return;
+
+  if (delta > 0 && item.quantity >= item.stock) {
+    alert(`Stok ${item.name} hanya tersisa ${item.stock}!`);
+    return;
+  }
 
   item.quantity += delta;
 
@@ -343,9 +353,13 @@ if (formCheckout) {
         btnKonfirmasi.disabled = true;
       }
 
-      // Kirim setiap menu sebagai baris terpisah di Google Sheets
+      // Kumpulkan semua proses pengiriman data agar bisa berjalan bersamaan (Paralel)
+      const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw";
+      const promises = [];
+
       for (const item of cart) {
-        await fetch(googleSheetsUrl, {
+        // 1. Promise ke Google Sheets
+        const sheetPromise = fetch(googleSheetsUrl, {
           method: "POST",
           headers: {
             "Content-Type": "text/plain"
@@ -357,7 +371,25 @@ if (formCheckout) {
             total: item.price * item.quantity
           }),
         });
+        promises.push(sheetPromise);
+      
+        // 2. Promise ke Supabase
+        const newStock = item.stock - item.quantity;
+        const supabaseUpdateUrl = `https://vrexdlklxjifxnmtyphs.supabase.co/rest/v1/menu?id=eq.${item.id}`;
+        const supabasePromise = fetch(supabaseUpdateUrl, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": supabaseKey,
+            "Authorization": `Bearer ${supabaseKey}`,
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({ stock: newStock })
+        });
+        promises.push(supabasePromise);
       }
+      // langsung all proggres bosssss
+      await Promise.allSettled(promises);
 
       console.log("Semua item berhasil disimpan ke Google Sheets");
 
@@ -379,6 +411,7 @@ if (formCheckout) {
       modalOverlay.classList.remove("show");
       cart.length = 0;
       renderCart();
+      loadMenu(); // Refresh stok dari Supabase
     } catch (error) {
       console.error("Error checkout:", error);
       alert("Terjadi kesalahan saat checkout. Silakan coba lagi.");
@@ -393,3 +426,56 @@ if (formCheckout) {
 }
 renderMenu();
 renderCart();
+
+// ============ REALTIME SUBSCRIPTION (KASIR) ============
+const SUPABASE_URL = "https://vrexdlklxjifxnmtyphs.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw";
+const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+function subscribeToStockChanges() {
+    if (!supabaseClient) {
+        console.warn("Supabase client belum diload, realtime tidak jalan.");
+        return;
+    }
+
+    supabaseClient
+        .channel('kasir-menu-stock')
+        .on('postgres_changes', {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'menu'
+        }, (payload) => {
+            console.log('Stok berubah via realtime:', payload);
+            if (payload.new) {
+                const index = menuData.findIndex(m => String(m.id) === String(payload.new.id));
+                if (index !== -1) {
+                    menuData[index] = payload.new;
+                    renderMenu(menuData); // Rerender daftar menu
+                    
+                    // Update juga data di keranjang agar tidak bisa checkout kalo stok berubah
+                    cart.forEach(cartItem => {
+                        if (String(cartItem.id) === String(payload.new.id)) {
+                            cartItem.stock = payload.new.stock;
+                            if (cartItem.quantity > payload.new.stock) {
+                                cartItem.quantity = Math.max(0, payload.new.stock);
+                            }
+                        }
+                    });
+                    
+                    // Hapus item jika qty jadi 0
+                    const oldCartLength = cart.length;
+                    const newCart = cart.filter(i => i.quantity > 0);
+                    if (newCart.length !== oldCartLength) {
+                        // Bersihkan cart global array dan isi ulang
+                        cart.length = 0;
+                        cart.push(...newCart);
+                    }
+                    
+                    renderCart();
+                }
+            }
+        })
+        .subscribe();
+}
+
+subscribeToStockChanges();
