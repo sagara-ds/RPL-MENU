@@ -499,3 +499,171 @@ background-size: 40px 30px, 80px 60px;
     margin: 0.5rem;
 }
 }
+
+/* ============ STOCK LABELS ============ */
+.stock-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    display: inline-block;
+    background: rgba(0, 200, 83, 0.15);
+    color: #00c853;
+    letter-spacing: 0.03em;
+}
+
+.stock-label.stock-low {
+    background: rgba(255, 171, 0, 0.15);
+    color: #ffab00;
+    animation: stockBlink 1.5s ease-in-out infinite;
+}
+
+.stock-label.stock-empty {
+    background: rgba(255, 23, 68, 0.15);
+    color: #ff1744;
+}
+
+@keyframes stockBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ============ OUT OF STOCK CARD ============ */
+.menu-card.out-of-stock {
+    position: relative;
+    opacity: 0.55;
+    filter: grayscale(0.4);
+    pointer-events: none;
+}
+
+.menu-card.out-of-stock::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 2rem;
+    pointer-events: none;
+}
+
+/* ============ DISABLED / HABIS BUTTON ============ */
+.menu-add-btn:disabled {
+    background: #444 !important;
+    color: #999 !important;
+    border-color: #555 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+    pointer-events: auto;
+}
+
+.lightmode .menu-add-btn:disabled {
+    background: #ccc !important;
+    color: #888 !important;
+    border-color: #bbb !important;
+}
+
+/* ============ BUTTON ADDED FEEDBACK ============ */
+.menu-add-btn.btn-added {
+    background: #00c853 !important;
+    color: #fff !important;
+    border-color: #00c853 !important;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+}
+
+/* ============ LOADING & ERROR TEXT ============ */
+.loading-text, .error-text {
+    text-align: center;
+    width: 100%;
+    padding: 3rem 1rem;
+    font-size: 1.1rem;
+    color: var(--txt);
+    opacity: 0.7;
+}
+
+.loading-text {
+    animation: loadingPulse 1.5s ease-in-out infinite;
+}
+
+.error-text {
+    color: #ff1744;
+    opacity: 1;
+}
+
+@keyframes loadingPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+/* ============ STOCK PULSE ANIMATION (REALTIME) ============ */
+.menu-card.stock-pulse {
+    animation: cardPulse 0.6s ease-out;
+}
+
+@keyframes cardPulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 100, 212, 0.6); }
+    50% { box-shadow: 0 0 20px 8px rgba(0, 100, 212, 0.3); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 100, 212, 0); }
+}
+
+.lightmode .menu-card.stock-pulse {
+    animation: cardPulseLight 0.6s ease-out;
+}
+
+@keyframes cardPulseLight {
+    0% { box-shadow: 0 0 0 0 rgba(246, 81, 1, 0.6); }
+    50% { box-shadow: 0 0 20px 8px rgba(246, 81, 1, 0.3); }
+    100% { box-shadow: 0 0 0 0 rgba(246, 81, 1, 0); }
+}
+
+/* ============ TOAST NOTIFICATIONS ============ */
+.toast-notification {
+    position: fixed;
+    top: 5.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    padding: 0.85rem 1.5rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    z-index: 99999;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    max-width: 90vw;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-warning {
+    background: rgba(255, 171, 0, 0.2);
+    color: #ffab00;
+    border: 1px solid rgba(255, 171, 0, 0.3);
+}
+
+.toast-success {
+    background: rgba(0, 200, 83, 0.2);
+    color: #00c853;
+    border: 1px solid rgba(0, 200, 83, 0.3);
+}
+
+.toast-info {
+    background: rgba(0, 100, 212, 0.2);
+    color: var(--primary);
+    border: 1px solid rgba(0, 100, 212, 0.3);
+}
+
+/* ============ CART SUBTOTAL ============ */
+.cart-subtotal {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin-top: 0.2rem;
+}
