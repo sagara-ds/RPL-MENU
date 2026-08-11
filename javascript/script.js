@@ -242,7 +242,7 @@ if (formCheckout) {
     formCheckout.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const nomorAdminWA = "6285624273949";
+        const nomorAdminWA = "6285187919349";
         const nama = document.querySelector('#nama').value;
         const alamat = document.querySelector('#alamat').value;
         const catatan = document.querySelector('#catatan').value;
