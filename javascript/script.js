@@ -81,7 +81,7 @@ function renderMenu() {
             <img src="${getLocalImage(menu.img)}" alt="${menu.name}" onerror="this.src='image/RPL_LOGO2.png'">
             <h3 class="menu-card-title">${menu.name}</h3>
             <p class="stock-label ${menu.stock <= 0 ? 'stock-empty' : menu.stock <= 3 ? 'stock-low' : ''}">
-            Stok: ${menu.stock <= 0 ? 'SOLD-OUT!' : menu.stock}
+            Stok: ${menu.stock <= 0 ? 'Habis!' : menu.stock}
             </p>
             <p>Harga: IDR ${menu.price.toLocaleString('id-ID')}</p>
             <button class="menu-add-btn" ${menu.stock <= 0 ? 'disabled' : ''}>
