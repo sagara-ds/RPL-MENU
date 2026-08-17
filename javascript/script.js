@@ -1,3 +1,7 @@
+// ============ EVENT STATUS ============
+// Set true jika acara sudah berakhir (pemesanan ditutup), false jika dibuka kembali
+const EVENT_CLOSED = true;
+
 // ============ SUPABASE CONFIG ============
 const SUPABASE_URL = 'https://vrexdlklxjifxnmtyphs.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw';
@@ -242,7 +246,15 @@ if (formCheckout) {
     formCheckout.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const nomorAdminWA = "6285187919349";
+        if (EVENT_CLOSED) {
+            const nama = document.querySelector('#nama').value.trim();
+            showToast(`Acara telah berakhir, pemesanan ditutup. Terima kasih${nama ? ', ' + nama : ''}!`, 'warning');
+            formCheckout.reset();
+            modalOverlay.classList.remove('show');
+            return;
+        }
+
+        const nomorAdminWA = "";
         const nama = document.querySelector('#nama').value;
         const alamat = document.querySelector('#alamat').value;
         const catatan = document.querySelector('#catatan').value;
@@ -346,6 +358,12 @@ function subscribeToStockChanges() {
         .subscribe();
 }
 
+
+// ============ EVENT CLOSED BANNER ============
+if (EVENT_CLOSED) {
+    const banner = document.querySelector('#event-banner');
+    if (banner) banner.hidden = false;
+}
 
 loadMenu();
 subscribeToStockChanges();

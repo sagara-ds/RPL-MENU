@@ -94,6 +94,40 @@ body::-webkit-scrollbar {
     color: var(--primary);
 }
 
+/* Event closed banner */
+.event-banner {
+    position: fixed;
+    top: 5.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: max-content;
+    max-width: 92vw;
+    padding: 0.7rem 1.4rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    background: rgba(255, 23, 68, 0.15);
+    color: #ff1744;
+    border: 1px solid rgba(255, 23, 68, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    animation: bannerFade 0.4s ease;
+}
+
+.event-banner i {
+    flex-shrink: 0;
+}
+
+@keyframes bannerFade {
+    from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
 /* Hero Section */
 .hero {
     text-align: center;
