@@ -10,7 +10,6 @@ asingkan/
 # Environment / credentials
 .env
 .env.local
-assets/js/config.js
 
 # Data lokal
 transaksi.xlsx

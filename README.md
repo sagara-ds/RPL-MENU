@@ -11,12 +11,12 @@
 <hr>
 
 <h2>Setup Kunci Supabase</h2>
-<p>Kunci Supabase <b>tidak ikut di-commit</b> (lihat <code>.gitignore</code>). Sebelum menjalankan website:</p>
+<p>Kunci Supabase tersimpan di <code>assets/js/config.js</code> (anon/publishable key yang memang dirancang untuk dipakai publik di frontend). Jika kamu menggunakan proyek Supabase lain:</p>
 <ol>
   <li>Salin <code>assets/js/config.example.js</code> menjadi <code>assets/js/config.js</code></li>
   <li>Isi <code>window.SUPABASE_URL</code> dan <code>window.SUPABASE_KEY</code> dengan kunci proyek Supabase kamu</li>
 </ol>
-<p>Jangan pernah commit <code>config.js</code> ke repository.</p>
+<p>Keamanan tidak bergantung pada menyembunyikan key, tapi pada pengaturan RLS di database (lihat di bawah).</p>
 
 <h2>Keamanan Database (RLS)</h2>
 <p>Setelah membuat tabel di Supabase, jalankan <code>supabase-rls-fix.sql</code> di <b>Supabase Dashboard &gt; SQL Editor</b> untuk mengunci akses:</p>
