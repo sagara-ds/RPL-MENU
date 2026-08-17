@@ -9,6 +9,22 @@
 <p>other media too. Alhamdulillah, the project can be done on time.</p>
 <p>Thank you, feel free to take a look on our code.</p>
 <hr>
+
+<h2>Setup Kunci Supabase</h2>
+<p>Kunci Supabase <b>tidak ikut di-commit</b> (lihat <code>.gitignore</code>). Sebelum menjalankan website:</p>
+<ol>
+  <li>Salin <code>assets/js/config.example.js</code> menjadi <code>assets/js/config.js</code></li>
+  <li>Isi <code>window.SUPABASE_URL</code> dan <code>window.SUPABASE_KEY</code> dengan kunci proyek Supabase kamu</li>
+</ol>
+<p>Jangan pernah commit <code>config.js</code> ke repository.</p>
+
+<h2>Keamanan Database (RLS)</h2>
+<p>Setelah membuat tabel di Supabase, jalankan <code>supabase-rls-fix.sql</code> di <b>Supabase Dashboard &gt; SQL Editor</b> untuk mengunci akses:</p>
+<ul>
+  <li>Tabel <code>menu</code>: publik hanya bisa baca + update kolom <code>stock</code></li>
+  <li>Tabel <code>transaksi</code>: publik hanya bisa insert, data customer tidak bisa dibaca publik</li>
+</ul>
+<hr>
 <p><b><i>-Barakuda_black</i></b></p>
 <hr>
 <h1>The Members of Barakuda_black</h1>

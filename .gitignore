@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Virtual environment
+.venv/
+
+# Local PHP backup (mengandung kredensial database lokal)
+asingkan/
+
+# Environment / credentials
+.env
+.env.local
+assets/js/config.js
+
+# Data lokal
+transaksi.xlsx
+transaksi.csv
+assets/receipts/
+*.log
+
+# OS / Editor
+Thumbs.db
+.DS_Store
+.vscode/

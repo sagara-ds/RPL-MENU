@@ -40,14 +40,14 @@ const cartTotal = document.querySelector(".cart-total");
 let menuData = [];
 
 async function loadMenu() {
-  const url = "https://vrexdlklxjifxnmtyphs.supabase.co/rest/v1/menu?select=*";
+  const url = `${window.SUPABASE_URL}/rest/v1/menu?select=*`;
 
   try {
     const response = await fetch(url, {
       method: "GET",
       headers: {
-        "apikey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw",
-        "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw",
+        "apikey": window.SUPABASE_KEY,
+        "authorization": `Bearer ${window.SUPABASE_KEY}`,
         "content-type": "application/json",
       },
       cache: "no-store"
@@ -354,7 +354,7 @@ if (formCheckout) {
       }
 
       // Kumpulkan semua proses pengiriman data agar bisa berjalan bersamaan (Paralel)
-      const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw";
+      const supabaseKey = window.SUPABASE_KEY;
       const promises = [];
 
       for (const item of cart) {
@@ -375,7 +375,7 @@ if (formCheckout) {
       
         // 2. Promise ke Supabase
         const newStock = item.stock - item.quantity;
-        const supabaseUpdateUrl = `https://vrexdlklxjifxnmtyphs.supabase.co/rest/v1/menu?id=eq.${item.id}`;
+        const supabaseUpdateUrl = `${window.SUPABASE_URL}/rest/v1/menu?id=eq.${item.id}`;
         const supabasePromise = fetch(supabaseUpdateUrl, {
           method: "PATCH",
           headers: {
@@ -428,8 +428,11 @@ renderMenu();
 renderCart();
 
 // ============ REALTIME SUBSCRIPTION (KASIR) ============
-const SUPABASE_URL = "https://vrexdlklxjifxnmtyphs.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZyZXhkbGtseGppZnhubXR5cGhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwNzY3NDAsImV4cCI6MjEwMTY1Mjc0MH0.Rc6KMW-JvL-C9QlYYbltL_NGKCYlYgQC75knOF6O_Pw";
+const SUPABASE_URL = window.SUPABASE_URL;
+const SUPABASE_KEY = window.SUPABASE_KEY;
+if (!SUPABASE_URL || !SUPABASE_KEY) {
+  console.error("config.js belum dibuat. Salin assets/js/config.example.js menjadi assets/js/config.js lalu isi kunci Supabase.");
+}
 const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
 function subscribeToStockChanges() {
