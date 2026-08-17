@@ -4,6 +4,12 @@ node_modules/
 # Virtual environment
 .venv/
 
+# Dead code (tidak dipakai runtime, dipertahankan di disk)
+api/
+assets/js/supabase.ts
+package.json
+package-lock.json
+
 # Local PHP backup (mengandung kredensial database lokal)
 asingkan/
 
